@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PostsService} from "./posts.service";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-posts',
@@ -21,9 +22,8 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(id: number){
-    this.postsService.deletePostById(id).subscribe(() => {
-      // @ts-ignore
-      this.posts = this.posts.filter(post => post.id !== id);
-    })
+    this.postsService.deletePostById(id).pipe(
+      finalize(() => this.posts = this.posts?.filter(post => post.id))
+    ).subscribe(() => {})
   }
 }
