@@ -10,7 +10,7 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
   getPosts(){
-    return this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts').pipe(
+    return this.http.get<any[]>(`https://jsonplaceholder.typicode.com/posts`).pipe(
      map(posts => {
        return posts.filter((post, index) => index < 10).map(post => ({id: post.id, title: post.title}));
      })
